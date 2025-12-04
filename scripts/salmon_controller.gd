@@ -13,6 +13,8 @@ extends RigidBody3D
 @export var negative_vertical_deadzone = 0.7
 @export var jump_impulse_version = false
 
+var swim_animation_amount = 0.0
+
 func _ready() -> void:
 	pass
 
@@ -30,11 +32,16 @@ func _physics_process(delta):
 		apply_force(Vector3(0.0, gravity_counteract_strength, 0.0))
 		
 		apply_torque_to_axis(Vector3.UP, upright_torque_strength)
-		$SalmonMesh/AnimationPlayer.play("ArmatureAction")
+		var horizontal_vel_vec = linear_velocity
+		horizontal_vel_vec.y = 0
+		var horizontal_vel = horizontal_vel_vec.length()
+		swim_animation_amount = lerp(swim_animation_amount, clamp(horizontal_vel / 3.0, 0.0, 1.0), 0.01)
 	else:
-		$SalmonMesh/AnimationPlayer.play("Action")
-		apply_torque_to_axis(Vector3.RIGHT, right_torque_strength)
+		swim_animation_amount = lerp(swim_animation_amount, 0.0, 0.05)
+		#apply_torque_to_axis(Vector3.RIGHT, right_torque_strength)
 		
+	$SalmonMesh/AnimationTree.set("parameters/Blend2/blend_amount", swim_animation_amount)
+
 	if jump_impulse_version:
 		if Input.is_action_just_pressed("jump"):
 			apply_impulse(Vector3.UP * jump_strength_impulse, nose_offset)
