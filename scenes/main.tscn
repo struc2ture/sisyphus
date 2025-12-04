@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://d0d0xxgv3fr7k"]
+[gd_scene load_steps=13 format=3 uid="uid://d0d0xxgv3fr7k"]
 
 [ext_resource type="Script" uid="uid://b7ny8fhe0s33q" path="res://scripts/salmon_controller.gd" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://bytdgha6ninjd" path="res://scenes/salmon.tscn" id="2_jyhfs"]
 [ext_resource type="Script" uid="uid://baep7ktortpnk" path="res://scripts/camera_pivot.gd" id="3_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://b1eqvn32ht5gb" path="res://res/uv-test.png" id="4_jyhfs"]
+[ext_resource type="Script" uid="uid://h02npvs6ud7v" path="res://scripts/salmon_anim_test.gd" id="4_tbgi4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sugp2"]
 
@@ -66,6 +67,9 @@ script = ExtResource("3_jyhfs")
 
 [node name="Camera3D" type="Camera3D" parent="Node3D/CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.78712887, 0.6167887, 0, -0.6167887, 0.78712887, 0, 1.5207194, 2.8871412)
+
+[node name="2025-12-03_Salmon" parent="Node3D" instance=ExtResource("2_jyhfs")]
+script = ExtResource("4_tbgi4")
 
 [node name="RigidBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)

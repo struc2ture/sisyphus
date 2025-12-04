@@ -16,7 +16,7 @@ extends RigidBody3D
 func _ready() -> void:
 	pass
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var cam := get_viewport().get_camera_3d()
 	if cam == null:
 		return
