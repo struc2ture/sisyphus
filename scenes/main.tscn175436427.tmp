@@ -1,0 +1,83 @@
+[gd_scene load_steps=13 format=3 uid="uid://d0d0xxgv3fr7k"]
+
+[ext_resource type="Script" uid="uid://b7ny8fhe0s33q" path="res://scripts/salmon_controller.gd" id="1_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://bblyt1ve6ie2" path="res://res/2025-12-03_Salmon.glb" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://baep7ktortpnk" path="res://scripts/camera_pivot.gd" id="3_jyhfs"]
+[ext_resource type="Script" uid="uid://4sxwdwqumn3d" path="res://scripts/salmon_animation.gd" id="3_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://b1eqvn32ht5gb" path="res://res/uv-test.png" id="4_jyhfs"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sugp2"]
+
+[sub_resource type="Sky" id="Sky_jyhfs"]
+sky_material = SubResource("ProceduralSkyMaterial_sugp2")
+radiance_size = 4
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 2
+sky = SubResource("Sky_jyhfs")
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_sky_contribution = 0.67
+ambient_light_energy = 0.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0wfyh"]
+radius = 0.08300781
+height = 2.0557861
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tbgi4"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tbgi4"]
+albedo_texture = ExtResource("4_jyhfs")
+uv1_scale = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tefeu"]
+lightmap_size_hint = Vector2i(14, 21)
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.35520482, 0.93478847, 0, -0.93478847, 0.35520482, 0, 6.8642025, 11.133158)
+light_energy = 1.466
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3252045, 0)
+
+[node name="Salmon" type="RigidBody3D" parent="Node3D"]
+gravity_scale = 0.0
+constant_force = Vector3(0, 0.5, 1)
+script = ExtResource("1_0wfyh")
+jump_impulse_version = true
+
+[node name="2025-12-03_Salmon" parent="Node3D/Salmon" instance=ExtResource("1_o5qli")]
+transform = Transform3D(-8.742278e-09, 0, 0.2, 0, 0.2, 0, -0.2, 0, -8.742278e-09, 0, 0, 0)
+script = ExtResource("3_tbgi4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Salmon"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.10275853, 0.23822021)
+shape = SubResource("CapsuleShape3D_0wfyh")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Node3D/Salmon"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.008498728, -0.073159695, 0.23822021)
+shape = SubResource("CapsuleShape3D_0wfyh")
+
+[node name="CameraPivot" type="Node3D" parent="Node3D"]
+script = ExtResource("3_jyhfs")
+
+[node name="Camera3D" type="Camera3D" parent="Node3D/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.78712887, 0.6167887, 0, -0.6167887, 0.78712887, 0, 1.5207194, 2.8871412)
+
+[node name="RigidBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("BoxShape3D_tbgi4")
+debug_fill = false
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="RigidBody3D"]
+transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_tbgi4")
+mesh = SubResource("BoxMesh_tefeu")

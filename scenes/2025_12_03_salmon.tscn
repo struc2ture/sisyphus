@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bum4wfrupqhee"]
+
+[ext_resource type="PackedScene" uid="uid://bblyt1ve6ie2" path="res://res/2025-12-03_Salmon.glb" id="1_xqcwh"]
+
+[node name="2025-12-03_Salmon" instance=ExtResource("1_xqcwh")]
